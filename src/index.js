@@ -1,11 +1,9 @@
 import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
 import { CreateVuexStore } from "./../plugins/CreateVuexStore";
+import { CreateComponents } from "./../plugins/CreateComponents";
 
+CreateComponents();
 var app = new Vue({
   el: "#app",
-  components: {
-    HelloWorld
-  },
   store: CreateVuexStore()
 });
