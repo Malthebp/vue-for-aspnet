@@ -1,9 +1,7 @@
+import NcApp from "./../NcApp/src/NcApp.js";
+import axios from "axios";
+import VueAxios from "vue-axios";
 import Vue from "vue";
-import { CreateVuexStore } from "./../plugins/CreateVuexStore";
-import { CreateComponents } from "./../plugins/CreateComponents";
+const app = new NcApp();
 
-CreateComponents();
-var app = new Vue({
-  el: "#app",
-  store: CreateVuexStore()
-});
+app.use(VueAxios, axios);

@@ -1,59 +1,39 @@
-var path = require("path");
-var webpack = require("webpack");
-const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const path = require("path");
+const webpack = require("webpack");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-var serverPath = "../../VueTest/dist";
-var clientPath = "../src/index.js";
-const watch = process.env.NODE_ENV !== "production";
-const mode = process.env.NODE_ENV || "development";
+const merge = require("webpack-merge");
 
-module.exports = {
-  mode,
-  watch,
-  entry: {
-    vue: "vue",
-    index: path.resolve(__dirname, clientPath)
-  },
+const serverPath = "../../VueTest/dist";
+const clientPath = "./../src/index.js";
+const styleEntry = "./../src/assets/scss/main.scss";
+const imagesEntry = "./../src/assets/images/";
+const webpackBase = require("./../NcApp/src/webpack.base.conf");
+
+module.exports = merge(webpackBase, {
+  entry: [
+    path.resolve(__dirname, clientPath),
+    path.resolve(__dirname, styleEntry)
+  ],
   output: {
     path: path.resolve(__dirname, serverPath),
-    filename: "[name].js"
+    publicPath: path.resolve(__dirname, "public")
   },
-  resolve: {
-    alias: {
-      vue$: "vue/dist/vue.esm.js"
-    }
-  },
-  module: {
-    rules: [
+  plugins: [
+    new webpack.DefinePlugin({
+      STORE_PATH: JSON.stringify("../../src/store"),
+      SERVER_PATH: serverPath,
+      CLIENT_PATH: clientPath,
+      COMPONENT_PATH: JSON.stringify("../../src/components/organisms"),
+      STYLE_ENTRY: styleEntry,
+      IMAGES_ENTRY: imagesEntry
+    }),
+    new CopyWebpackPlugin([
       {
-        test: /\.vue$/,
-        loader: "vue-loader",
-        options: {
-          loaders: {
-            css: [
-              "vue-style-loader",
-              {
-                loader: "css-loader"
-              }
-            ],
-            js: ["babel-loader"]
-          }
-        }
-      },
-      {
-        test: /\.scss$/,
-        use: ["vue-style-loader", "css-loader", "sass-loader"]
-      },
-      {
-        // This is required for other javascript modules you are gonna write besides vue.
-        test: /\.js$/,
-        loader: "babel-loader",
-        include: [
-          path.resolve("src"),
-          path.resolve("node_modules/webpack-dev-server/client")
-        ]
+        from: path.resolve(__dirname, imagesEntry),
+        to: "images",
+        ignore: [".*"]
       }
-    ]
-  },
-  plugins: [new VueLoaderPlugin()]
-};
+    ])
+  ]
+});

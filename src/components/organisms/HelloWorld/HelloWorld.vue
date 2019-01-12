@@ -6,7 +6,7 @@
       Open modal
     </button>
     <button @click="check">
-      Not namespaced
+      Not namespaceds
     </button>
     <div
       v-if="modal"
