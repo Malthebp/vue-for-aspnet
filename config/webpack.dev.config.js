@@ -9,5 +9,13 @@ module.exports = merge(webpackConfig, {
     alias: {
       styles: styleEntry
     }
+  },
+  devServer: {
+    proxy: {
+      "*": {
+        target: "http://localhost:56051",
+        changeOrigin: true
+      }
+    }
   }
 });

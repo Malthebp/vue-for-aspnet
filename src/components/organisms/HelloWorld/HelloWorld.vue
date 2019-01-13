@@ -2,11 +2,11 @@
   <div class="hello-world">
     <h1>Razor to prop: {{ prop }}</h1>
     <h2>Store message: {{ stateMsg }}</h2>
-    <button @click="modal = !modal">
+    <button
+      class="btn btn-secondary"
+      @click="modal = !modal"
+    >
       Open modal
-    </button>
-    <button @click="check">
-      Not namespaceds
     </button>
     <div
       v-if="modal"
@@ -66,7 +66,7 @@ export default {
 .hello-world {
   &__modal {
     &-bg {
-      background-color: rgba(black, 0.1);
+      background-color: rgba(black, 0.5);
       position: fixed;
       width: 100%;
       height: 100%;
@@ -81,6 +81,7 @@ export default {
       transform: translate(-50%, -50%);
       position: fixed;
       z-index: 10;
+      padding: 16px;
     }
   }
 }

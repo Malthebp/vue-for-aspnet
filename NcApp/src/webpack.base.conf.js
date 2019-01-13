@@ -1,4 +1,5 @@
-var path = require("path");
+const path = require("path");
+const webpack = require("webpack");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
